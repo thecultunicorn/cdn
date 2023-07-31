@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Timer</title>
+		<link rel="icon" type="image/png" href="https://static-cdn.jtvnw.net/emoticons/v2/724216/static/light/3.0" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Figtree" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Azeret+Mono" />
+		<style>
+			html {
+				-webkit-user-select: none; /* Safari */
+				-ms-user-select: none; /* IE 10 and IE 11 */
+				user-select: none; /* Standard syntax */
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+
+				font-family: "Figtree", Arial, Helvetica, sans-serif;
+				font-size: 16px;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			click {
+				outline: none;
+				box-shadow: none;
+				background: none;
+
+				font-size: 12px;
+				padding: 5px 10px;
+				margin: 20px;
+
+				border: solid;
+				border-width: 1px;
+				border-color: black;
+				border-radius: 25px;
+			}
+
+			click:active {
+				background-color: black;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="margin: 20px; display: flex; flex-direction: column; align-items: start; row-gap: 5px">
+			<p style="font-size: 20px">Oops!</p>
+			<p>Let's try that again in... <span id="countdown"></span></p>
+		</div>
+		<click onclick="goPage()">Or spam this button ¯\_(ツ)_/¯</click>
+		<audio id="error-audio" style="display: none">
+			<source src="https://www.myinstants.com/media/sounds/error_112c2701e486b4d1e82ab68c0545e6f5.mp3" type="audio/mpeg" />
+		</audio>
+
+		<script>
+			const currentURL = window.location.href;
+			const countdownElement = document.getElementById("countdown");
+			const error = document.getElementById("error-audio");
+			const retryDuration = 20;
+			let count = retryDuration;
+
+            countdownElement.textContent = retryDuration;
+
+			if (count == retryDuration) {
+				error.play();
+			}
+
+			function goPage() {
+				window.location.href = currentURL;
+			}
+
+			function countdown() {
+				count -= 1;
+				if (count < 0) {
+					goPage();
+				}
+
+				if (count > -1) {
+					countdownElement.textContent = count;
+				}
+			}
+
+			setInterval(countdown, 1000);
+		</script>
+	</body>
+</html>
